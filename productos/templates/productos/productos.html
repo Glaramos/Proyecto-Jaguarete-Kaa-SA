@@ -1,0 +1,64 @@
+{% extends "ProyectoApp_jaguarete_kaa/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<br>
+<br>
+
+<div class="container">
+
+  <div style="float:right;">   
+
+    {% include "carro/widget.html" %} 
+  
+  </div>
+
+
+  <div class="row">
+
+{% for producto in productos %}
+
+    <div class="col-md-3">
+
+    <div class="card" style="width: 100%; margin: 5px 5px;">
+
+        <img src="{{producto.imagen.url}}" class="card-img-top">
+
+        <div class="card-body" style="text-align: center;">
+
+            <h4 class="card-title"><b>{{producto.nombre}}</b></h4>
+
+            <h6 class="card-title">{{producto.descripcion}}</h6>            
+
+            <h5><p class="card-text">{{producto.precio}}&nbsp;$</p></h5>
+
+
+        </div> 
+        
+        <a href="{% url 'modificar_producto' producto.id %}" class= "btn btn-success">Modificar</a> 
+
+        <div class="card-footer text-center">
+        {% if user.is_authenticated  %}
+          <a href="{% url 'carro:agregar' producto.id %}" class="btn btn-success">Agregar al carro</a>
+        {% else %}
+        {% endif %}
+        </div>
+        
+    </div><!--card que se cierra-->
+    
+  </div>
+
+
+
+{% endfor %}
+  </div>
+ 
+  
+</div>
+
+<br>
+<br>
+
+{% endblock %}

@@ -1,0 +1,193 @@
+<html>
+
+<head>
+
+    {% load static %}
+
+    <!-- Bootstrap -->
+    <link href="{% static 'ProyectoApp_jaguarete_kaa/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+     <!-- Fonts -->
+    
+     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
+     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+     
+
+    <!-- Styles -->
+    <link href="{% static 'ProyectoApp_jaguarete_kaa/css/gestion.css'%}" rel="stylesheet">
+</head>
+
+<body>
+<br/>
+
+<nav class="navbar navbar-light bg-light ">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="{% static 'ProyectoApp_jaguarete_kaa/img/index.jpg'%}" alt="" width="40" height="74" class="d-inline-block align-text-top">
+      <h3>Jaguarete kaa S.A.</h3>
+    </a>
+  </div>
+
+<ul class="nav justify-content-end">
+
+  {% if user.is_authenticated  %}
+   
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="{% url 'logout' %}"><h4>Cerrar sesion    </h4></a>      
+    </li>
+     
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href=""><h4>{{user.username}}</h4></a>
+    </li>                
+  {% else %}
+
+    <li class="nav-item">
+      <a href="{% url 'login' %}"><h4>Iniciar sesion</h4></a> 
+    </li>
+
+        <li class="nav-item">
+      <a href="{% url 'registro' %}"><h4>Registrate</h4></a> 
+    </li>
+  {% endif %}
+</ul>
+
+</nav>
+
+<br/>
+ <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="{% url 'Home' %}">Menu</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+       <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'Home' %}"><h6>Inicio</h6></a>
+          </li>
+          <li class="nav-item  px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'Acerca de' %}"><h6>Acerca de</h6></a>
+          </li>
+          <li class="nav-item  px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'Productos' %}"><h6>productos</h6></a>
+          </li>
+          <li class="nav-item  px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'Contacto' %}"><h6>Contacto</h6></a>
+          </li>  
+
+          {% comment %} {% if perms.ProyectoApp_jaguarete_kaa.add_categoria  %}          
+          <li class="nav-item px-lg-6">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'agregar_producto' %}"><h6>Agregar Categorias</h6></a>
+          </li>           
+          {% endif %}
+
+          {% if perms.ProyectoApp_jaguarete_kaa.view_categoria  %}           
+          <li class="nav-item  px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'listar_productos' %}"><h6>Listar Categorias</h6></a>
+          </li> 
+          {% endif %}            {% endcomment %}
+
+          {% if perms.ProyectoApp_jaguarete_kaa.add_producto  %}            
+          <li class="nav-item  px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'agregar_producto' %}"><h6>Agregar productos</h6></a>
+          </li>
+          {% endif %}
+
+          {% if perms.ProyectoApp_jaguarete_kaa.view_producto  %}           
+          <li class="nav-item  px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'listar_productos' %}"><h6>Listar productos</h6></a>
+          </li> 
+          {% endif %} 
+
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+           method="GET">
+              <div class="input-group">
+               <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..." name="buscar" value="{{ request.POST.buscar }}">
+                 <div class="input-group-append">
+                 <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- contenido cambiante! -->
+
+  <h2 class="site-heading text-center text-white d-none d-lg-block">
+      
+      <span class="site-heading-lower">La tienda de la Yerba Mate Online</span>
+    </h2>
+
+  {% block content %}
+
+  
+  {% endblock %}
+
+    <!-- Footer -->
+    <footer class="footer text-faded text-center py-5">
+      <div class="container">
+        <p class="m-0">
+	        <a href="#" class="link">
+	          <span class="fa-stack fa-lg">
+	            <i class="fa fa-circle fa-stack-2x"></i>
+	            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+	          </span>
+	        </a>
+	        <a href="#" class="link">
+	          <span class="fa-stack fa-lg">
+	            <i class="fa fa-circle fa-stack-2x"></i>
+	            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+	          </span>
+	        </a>
+	        <a href="#" class="link">
+	          <span class="fa-stack fa-lg">
+	            <i class="fa fa-circle fa-stack-2x"></i>
+	            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+	          </span>
+	        </a>
+	    </p>
+        <p class="m-0 mbt">
+        <h4>	<a href="sample.html" class="link">Jaguarete kaa S.A.</a> </h4>
+  		</p>
+        <p class="m-0 mbt1">&copy; Derechos reservados 2021</p>
+        <h4>	<a href="sample.html" class="link">Gladys Angelica Ramos</a> </h4>        
+      </div>
+	</footer>
+
+    <!-- Bootstrap -->
+    <script src="{% static 'ProyectoApp_jaguarete_kaa/vendor/jquery/jquery.min.js'%}"></script>
+    <script src="{% static 'ProyectoApp_jaguarete_kaa/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    {% if messages  %}
+        {% for m in messages %}
+
+            <script>
+
+              Swal.fire(
+
+              {
+                "title":"Felicitaciones",
+                "text":"{{m}}",
+                "icon":"success"
+              }
+              )
+
+            </script>
+
+        {% endfor %}
+
+     {% endif %}
+
+
+{% block js %}
+
+{% endblock %}
+</body>
+</html>
